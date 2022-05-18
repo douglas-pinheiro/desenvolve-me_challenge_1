@@ -1,5 +1,6 @@
 package br.com.douglaspinheiro.clientes.service.impl;
 
+import br.com.douglaspinheiro.clientes.controller.converter.ClienteConverter;
 import br.com.douglaspinheiro.clientes.controller.datacontract.ClienteDataContract;
 import br.com.douglaspinheiro.clientes.entity.Cliente;
 import br.com.douglaspinheiro.clientes.repository.ClienteRepository;
@@ -20,12 +21,7 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public Cliente createCliente(ClienteDataContract cliente) {
-        var clienteEntity = Cliente.builder()
-                .cpf(cliente.getCpf())
-                .nascimento(cliente.getNascimento())
-                .nome(cliente.getNome()).build();
-
-        return clienteRepository.save(clienteEntity);
+        return clienteRepository.save(ClienteConverter.dataContractToEntity(cliente));
     }
 
     @Override

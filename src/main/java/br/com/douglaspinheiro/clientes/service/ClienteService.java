@@ -11,6 +11,6 @@ public interface ClienteService {
 
     Cliente getClienteByCPF (String cpf);
 
-    List <Cliente> getClientes (int page, int pageSize);
+    List<Cliente> getClientes (int page, int pageSize);
 
 }
