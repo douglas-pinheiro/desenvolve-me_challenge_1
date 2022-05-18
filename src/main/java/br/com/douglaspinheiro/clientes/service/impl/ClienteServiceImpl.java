@@ -3,8 +3,10 @@ package br.com.douglaspinheiro.clientes.service.impl;
 import br.com.douglaspinheiro.clientes.controller.converter.ClienteConverter;
 import br.com.douglaspinheiro.clientes.controller.datacontract.ClienteDataContract;
 import br.com.douglaspinheiro.clientes.entity.Cliente;
+import br.com.douglaspinheiro.clientes.exception.CpfInvalidoException;
 import br.com.douglaspinheiro.clientes.repository.ClienteRepository;
 import br.com.douglaspinheiro.clientes.service.ClienteService;
+import br.com.douglaspinheiro.clientes.util.CpfUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
@@ -21,11 +23,17 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public Cliente createCliente(ClienteDataContract cliente) {
-        return clienteRepository.save(ClienteConverter.dataContractToEntity(cliente));
+        cliente.setCpf(CpfUtil.formataCpf(cliente.getCpf()));
+        if(CpfUtil.validaCPF(cliente.getCpf())){
+            return clienteRepository.save(ClienteConverter.dataContractToEntity(cliente));
+        } else{
+            throw new CpfInvalidoException();
+        }
     }
 
     @Override
     public Cliente getClienteByCPF(String cpf) {
+        cpf = CpfUtil.formataCpf(cpf);
         return clienteRepository.getClienteByCpf(cpf);
     }
 
