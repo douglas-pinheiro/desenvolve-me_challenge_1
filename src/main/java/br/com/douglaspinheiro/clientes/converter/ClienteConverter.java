@@ -1,4 +1,4 @@
-package br.com.douglaspinheiro.clientes.controller.converter;
+package br.com.douglaspinheiro.clientes.converter;
 
 import br.com.douglaspinheiro.clientes.controller.datacontract.ClienteDataContract;
 import br.com.douglaspinheiro.clientes.entity.Cliente;

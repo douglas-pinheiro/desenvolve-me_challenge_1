@@ -1,6 +1,6 @@
 package br.com.douglaspinheiro.clientes.controller;
 
-import br.com.douglaspinheiro.clientes.controller.converter.ClienteConverter;
+import br.com.douglaspinheiro.clientes.converter.ClienteConverter;
 import br.com.douglaspinheiro.clientes.controller.datacontract.ClienteDataContract;
 import br.com.douglaspinheiro.clientes.service.ClienteService;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,8 @@ public class ClientesController {
     }
 
     @GetMapping
-    public List<ClienteDataContract> getClientes(@RequestParam("page") int page, @RequestParam("pageSize") int pageSize){
+    public List<ClienteDataContract> getClientes(@RequestParam(name = "page", required = false, defaultValue = "0") int page,
+                                                 @RequestParam(name = "pageSize", required = false, defaultValue = "100") int pageSize){
         return clienteService.getClientes(page, pageSize)
                 .stream()
                 .map(ClienteConverter::entityToDataContract)
